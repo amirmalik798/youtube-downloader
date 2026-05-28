@@ -81,6 +81,8 @@ to react to backend workflow events in real-time.
 The application avoids global shared SSE state by assigning each browser connection a unique
 `clientId`.
 
+<img src="./assets/sse.png" />
+
 Workflow:
 
 1. Client establishes SSE connection using `EventSource API`
