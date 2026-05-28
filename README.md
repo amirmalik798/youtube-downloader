@@ -83,13 +83,17 @@ The application avoids global shared SSE state by assigning each browser connect
 
 Workflow:
 
-1. Browser established SSE connection using EventSource API
-2. Server generates and stores a unique clientId
-3. Client includes clientId in subsequent requests
-4. Backend routes status updates only to the matching SSE stream
+1. Client establishes SSE connection using `EventSource API`
+2. Server generates a unique `clientId`
+3. Server associates generated `clientId` with the client's `response stream`
+4. Client includes `clientId` in subsequent requests
+5. Server uses `clientId` to push updates only to matching `SSE stream`
 
 This prevents cross-client status and progress updates leakage and allows multiple users to
 process downloads concurrently without conflicting status updates.
+
+Server uses `Map` data structure to associate clientIds with their respective response streams,
+because `Map` allows O(1) lookup.
 
 ### FFmpeg + yt-dlp Workflow
 
