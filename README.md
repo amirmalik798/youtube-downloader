@@ -56,6 +56,7 @@ Supports:
 - Download YouTube videos as MP4
 - Convert YouTube videos to MP3
 - Real-time progress updates using SSE
+- Multi-client SSE support
 - Static file download architecture
 - Automatic file cleanup system
 - Filename sanitization
@@ -74,6 +75,21 @@ The application uses Server-Sent Events (SSE) to provide real-time status update
 
 A dedicated SSE connection is established between the frontend and backend, allowing the UI
 to react to backend workflow events in real-time.
+
+### Multi-Client SSE Architecture
+
+The application avoids global shared SSE state by assigning each browser connection a unique
+`clientId`.
+
+Workflow:
+
+1. Browser established SSE connection using EventSource API
+2. Server generates and stores a unique clientId
+3. Client includes clientId in subsequent requests
+4. Backend routes status updates only to the matching SSE stream
+
+This prevents cross-client status and progress updates leakage and allows multiple users to
+process downloads concurrently without conflicting status updates.
 
 ### FFmpeg + yt-dlp Workflow
 
