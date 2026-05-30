@@ -17,7 +17,7 @@ export const getMetadata = async (req, res, next) => {
 
     } catch(error) {
         sendStatus('Failed to Fetch Metadata.', 'ERROR', clientId);
-        return next(new AppError('Error Encountered While Fetching Metadata.', 500));
+        return next(error);
     }
 };
 
@@ -39,7 +39,7 @@ export const downloadBestAudio = async (req, res, next) => {
         });
     } catch(error) {
         sendStatus('Failed to Prepare MP3 for Download.', 'ERROR', clientId); 
-        return next(new AppError('Error Encountered While Converting to MP3', 500));
+        return next(error);
     }
 };
 
@@ -61,6 +61,6 @@ export const downloadBestVideo = async (req, res, next) => {
         });
     } catch (error) {
         sendStatus('Failed to Prepare MP4 for Download.', 'ERROR', clientId); 
-        return next(new AppError('Error Encountered While Downloading MP4', 500));
+        return next(error);
     }
 };
